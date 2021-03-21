@@ -1,4 +1,5 @@
 //Load Dependencies
+require('dotenv').config() //Required for Environment Variables
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -44,7 +45,7 @@ app.use((req, res, next)=>{
 });
 //Database Connection
 const mongoose = require("mongoose");
-mongoose.connect(String(mongoDbUrl), {useNewUrlParser: true});
+mongoose.connect(String(process.env.mongoDbUrl), {useNewUrlParser: true});
 mongoose.connection
   .once('open', ()=>console.log('Mongo DB Connected'))  
   .on('error',(err)=>{console.log('Could not Connect' + err);});  
@@ -88,5 +89,5 @@ app.use('/admin/comments', comments);
 
 //Port Listen Logic
 app.listen(process.env.PORT || 3000, function () {
-    console.log("Server is running on port 3000");
+    console.log(`Server is Listening on ${process.env.PORT}`);
 });
