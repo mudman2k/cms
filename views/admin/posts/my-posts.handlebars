@@ -1,0 +1,56 @@
+<h1>{{user.firstName}} {{user.lastName}} Posts</h1>
+
+
+
+
+<table class="table table-bordered">
+
+<thead>
+    <tr>
+<th>ID</th>
+<th>Picture</th>
+<th>Title</th>
+<th>Status</th>
+<th>Categories</th>
+<th>Allow Comments</th>
+<th>View Post</th>
+<th>Date Posted</th>
+<th>Edit Post</th>
+<th>Delete Post</th>
+
+
+    </tr>
+
+
+
+</thead>
+<tbody>
+
+    {{#each posts}}
+    <tr>
+        <td>{{id}}</td>
+        <td><img src="/uploads/{{file}}" alt="" class='img-thumbnail'></td>
+        <td>{{title}}</td>
+        <td>{{status}}</td>
+        <td>{{category.name}}</td>
+        <td>{{allowComments}}</td>
+        <td><a href="/post/{{id}}">View</a></td>
+        <td>{{generateDate date 'MMMM Do YYYY'}}</td>
+
+        <td><a href="/admin/posts/edit/{{id}}" class="btn btn-info">Edit</a></td>
+        <td>
+            <form action="/admin/posts/{{id}}?_method=DELETE" method='post'>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            </td>
+        </form>
+    {{/each}}
+    </tr>
+
+
+
+</tbody>
+
+
+
+
+</table>
