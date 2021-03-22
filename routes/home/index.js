@@ -27,7 +27,17 @@ router.get('/', (req, res) => {
     Post.find({})
         .skip((perPage * page) - perPage)
         .limit(perPage)
-        .populate('comments').then(posts => {
+        .populate({
+            path: 'comments',
+            match: {
+                approveComment: true
+            },
+            populate: {
+                path: 'user',
+                model: 'users'
+            }
+        })
+        .populate('user').then(posts => {
             Post.count().then(postCount => {
                 Category.find({}).then(categories => {
                     res.render('home/index', {
@@ -36,19 +46,23 @@ router.get('/', (req, res) => {
                         current:parseInt(page),
                         pages:Math.ceil(postCount/perPage)
 
-                    });
-
-                });
-
-
+                 });
 
             });
 
 
-        })
+
+        });
+
+
+     })
 
 
 });
+
+
+
+
 
 
 router.get('/about', (req, res) => {

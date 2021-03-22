@@ -114,47 +114,56 @@ router.get('/edit/:id', (req, res) => {
 });
 
 
-router.put('/edit/:id', async (req, res) => {
-    if (!isEmpty(req.files)) {
-        let file = req.files.file;
-        filename = file.name + "_" + Date.now() + '.jpg';
-        let dirUploads = './public/uploads/';
+router.put('/edit/:id', (req, res)=>{
 
-        file.mv(dirUploads + filename, (err) => {
-            if (err) throw err;
-            else console.log('Upload Successful');
-        })
+    Post.findOne({_id: req.params.id})
 
-        console.log('Is Not Empty');
-    }
+        .then(post=>{
+            if(req.body.allowComments){
+                allowComments = true;
+            } else{
+                allowComments = false;
+            }
+
+            post.user = req.user.id;
+            post.title = req.body.title;
+            post.status = req.body.status;
+            post.allowComments = allowComments;
+            post.body = req.body.body;
+            post.category = req.body.category;
 
 
 
-    let allowComments = true;
-    if (req.body.allowComments) {
-        allowComments = true;
-    } else {
-        allowComments = false;
-    }
-    
-    
-    const updatedPost = await Post.updateOne({
-        _id: req.params.id
-    }, {
-        user:req.user.id,
-        title: req.body.title,
-        status: req.body.status,
-        allowComments: allowComments,
-        body: req.body.body,
-        file:filename,
-        category:req.body.category
-    }, {
-        new: true
-    });
-    req.flash('success_message', ` Post ${req.body.title} Was Updated Successfully`);
 
-    console.log(updatedPost);
-    res.redirect('/admin/posts');
+            if(!isEmpty(req.files)){
+
+                let file = req.files.file;
+                filename = Date.now() + '-' + file.name;
+                post.file = filename;
+
+                file.mv('./public/uploads/' + filename, (err)=>{
+
+                    if(err) throw err;
+
+                });
+
+            }
+
+
+            post.save().then(updatedPost=>{
+
+
+
+                req.flash('success_message', 'Post was successfully updated');
+
+
+
+                res.redirect('/admin/posts/my-posts');
+            });
+
+        });
+
+
 });
 
 router.delete('/:id', (req, res) => {

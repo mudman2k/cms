@@ -13,12 +13,12 @@
             <img class="card-img-top" src="/uploads/{{file}}" alt="Card image cap">
             <div class="card-body">
               <h2 class="card-title">{{title}}</h2>
-              <p class="card-text">{{body}}</p>
-              <a href="/post/{{id}}" class="btn btn-primary">Read More &rarr;</a>
+              <p class="card-text">{{{body}}}</p>
+              <a href="/post/{{slug}}" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">
               Posted on {{generateDate date 'MMMM Do YYYY'}} by
-              <a href="#">Start Bootstrap</a>
+              <a href="#">{{post.user.firstName}} {{post.user.lastName}}</a>
             </div>
           </div>
 {{/each}}
