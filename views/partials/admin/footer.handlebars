@@ -97,12 +97,15 @@
                 data: { id: id, approveComment: data },
                 cache: false,
                 success: function (data) {
-                    console.log(`Comment ${data._id} was updated`);
-                    toastr.success(`Comment with id ${data._id} was updated`);
+                    console.log(`Comment ${data._id} was approved`);
+                    toastr.success(`Comment with id ${data._id} was approved`);
 
                 }
+                 
+                
             });
         });
+        
 
     });
 
