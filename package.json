@@ -4,8 +4,8 @@
   "description": "CMS in Node",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "build": "webpack"
+    "start": "node app.js"
+    
   },
   "author": "James Clark Jr",
   "license": "ISC",
