@@ -45,8 +45,7 @@ app.use((req, res, next)=>{
 });
 //Database Connection
 const mongoose = require("mongoose");
-mongoose.connect(//String(process.env.mongoDbUrl),
-"mongodb://localhost:27017/cmsDB", {useNewUrlParser: true});
+mongoose.connect(String(process.env.mongoDbUrl), {useNewUrlParser: true});
 mongoose.connection
   .once('open', ()=>console.log('Mongo DB Connected'))  
   .on('error',(err)=>{console.log('Could not Connect' + err);});  
